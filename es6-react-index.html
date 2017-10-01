@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+	<title>ES6 Classes</title>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script src="babel/browser.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../soh-database/public/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div id="app"></div>
+<script type="text/babel">
+    var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+	class Counter extends React.Component {
+	    constructor() {
+	       super()
+	       this.state = {count:0, posX:0, posY:0}
+	    }
+	    moveBox() {}
+	    gameStart() {}
+	    launchWeapon() {
+	        return (
+                <Entity objectName = 'Box' entityText = {0}/>
+	        )
+	    }
+	    componentDidAppear() {
+	       console.log("Component has appeared")
+	    }
+	    defaultFunction() {}
+	    render() {
+	        return (
+	            <div className = 'container-fluid'>
+                    <div className="controller-area">
+                        <Entity objectName = 'controllers float-left' entityText = 'Add Box' />
+                        <Entity objectName = 'controllers float-left' entityText = 'Move Box' ClickHandler = { this.moveBox } />
+    	                <Entity objectName = 'controllers float-left' entityText = 'Launch Weapon' ClickHandler = { this.launchWeapon }/>
+    	                <Entity objectName = 'controllers float-left' entityText = 'Launch Weapon' ClickHandler = { this.default }/>
+                    </div>
+                    <div className="game-arena">
+                        <Entity objectName = 'actor'/>
+                        <ReactCSSTransitionGroup
+                            transitionName="example"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={300}> j
+                        </ReactCSSTransitionGroup>
+                    </div>
+    	        </div>
+	        )
+	    }
+	}
+
+	Counter.defaultProps = {text: 'Hello', entityText: ''};
+	 const Entity = (props) => {
+             return (
+               <div className = {props.objectName} onClick= {props.ClickHandler}>{props.entityText}</div>
+            )
+        }
+	ReactDOM.render(
+	    <Counter />,
+	    document.getElementById('app')
+	)
+</script>
+</body>
+</html>

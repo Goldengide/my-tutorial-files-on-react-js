@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>React tutorial</title>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script src="babel/browser.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../soh-database/public/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script> -->
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type='text/babel'>
+    var CountChallenge  = React.createClass(
+    {
+        getDefaultProps: function(){
+            return {
+                valueOne: 1,
+                valueTwo: 5,
+                valueThree: 10
+            }
+        },
+        getInitialState: function (){
+            return {
+                count: 0,
+                jobs: [
+                   {title: 'Software Engineer', company: 'iQube Labs', id:1},
+                   {title: 'Hardware Engineer', company: 'CcHub', id:2},
+                   {title: 'Usability Engineering', company: 'IdeaHub', id:3},
+                   {title: 'Usability Engineering', company: 'iQube Labs', id:4}
+                ]
+            }
+        },
+        incrementCount: function(value) {
+            console.log(this);
+            this.setState({
+              count: this.state.count + value
+            })
+        },
+    	render: function() {
+    		return (
+    		    <div className="container">
+    		         <h1>Count: {this.state.count}</h1>
+    		         <Button clickHandler={ this.incrementCount.bind(this, this.props.valueOne)} value={this.props.valueOne} style = 'btn btn-lg btn-info'/>
+    		         <Button clickHandler={ this.incrementCount.bind(this, this.props.valueTwo)} value={this.props.valueTwo} style = 'btn btn-lg btn-warning'/>
+    		         <br/><br/>
+    		         <h2>Some list of Job Vacancy:</h2>
+    		         <ul className="list-unstyled">
+    		         	{this.state.jobs.map(function(job){
+    		         	   return <Task title = {job.title} company= {job.company} key = {job.id}/>
+    		         	})}
+    		         </ul>
+    		    </div>
+    			)
+    	}
+    });
+    var Button = function(props) {
+        return (
+            <button value={props.value} onClick={props.clickHandler} className={props.style}>Add {props.value}</button>
+        )
+    };
+    var Task = function(props) {
+        return (
+            <li key ={props.id}> {props.title} in {props.company} company</li>
+        )
+    };
+
+    ReactDOM.render(
+      <CountChallenge valueOne = {100} valueTwo = {1000}/>,
+      document.getElementById('app')
+    );
+    </script>
+  </body> 
+</html>

@@ -1,0 +1,70 @@
+.container-fluid {
+	height: 500px;
+	min-height: 500px;
+}
+
+.btn {
+	float: left;
+	margin: 2px;
+}
+
+.box {
+	min-width: 30px;
+	min-height: 30px;
+	width: 30px;
+	height: 30px;
+	background-color: #000;
+	position: absolute;
+}
+
+.controllers {
+	min-width: 50px;
+	min-height: 30px;
+	width: 150px;
+	height: 30px;
+	background-color: #000;
+	margin-left: 10px;
+	color: #fff;
+	font-size: 14px;
+	text-align: center;
+
+}
+.bullet {
+	width: 10px;
+	height: 10px;
+	background-color: #f6c;
+	position: absolute;
+}
+
+.munition {
+
+}
+
+.float-left {
+	float: left;
+	margin-left: 3px;
+}
+
+.controller-area {
+	height: 10%;
+	width: 100%;
+	background-color: #eee;
+	border: solid #ccc thin;
+	border-radius: 5px;
+	padding: 0.5%;
+}
+
+.game-arena {
+	height: 80%;
+	width: 100%;
+	border-radius: 5px;
+	border: solid #eee thin;
+}
+
+.actor {
+	background-image: url(../img/actor.png);
+	width: 20px;
+	height: 40px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}

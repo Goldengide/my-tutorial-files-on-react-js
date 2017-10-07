@@ -8,108 +8,99 @@
     <script src="babel/browser.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../soh-database/public/assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    
+    <style type="text/css">
+      .side-navigator {float: left}
+      .navigator {width: 4em; height: 4em; text-align: center;}
+      .controllers{background-color: #333; height: 50em; padding-top: 10em;}
+      .arena{background-color: #000; height: 50em; color: white;}
+      .initiator{margin-bottom: 5em; border-radius: 50%; width: 4em; height: 4em;}
+      /*.container{height: 50em}*/
+    </style>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.2/browser.min.js"></script> -->
   </head>
   <body>
     <div id="app"></div>
     <script type="text/babel">
-    var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-    
-    	var Game = React.createClass({
-            getDefaultProps: function () {
-                return {
-                    entityText: ''
-                }
-            },
-            getInitialState: function() {
-                return {
-                    posX: 0,
-                    posY: 0,
-                    speed: 0
-                }
-            },
-            launchWeapon: function () {
-                console.log(this);
-                this.setState({
-                    posX: 230,
-                    posY: 250
-                })
-            },
-            moveBox: function() {
-                console.log('Box Moved');
-            },
-            defaultFunction: function(){
-                console.log('OK');
-            },
-    	    render: function() {
-    	        return (
-    	           <div className = 'container-fluid'>
-                       <div className="controller-area">
-                           <Entity objectName = 'controllers float-left' entityText = 'Add Box' />
-                           <Entity objectName = 'controllers float-left' entityText = 'Move Box' ClickHandler = { this.moveBox } />
-    	                   <Entity objectName = 'controllers float-left' entityText = 'Launch Weapon' ClickHandler = { this.launchWeapon }/>
-                       </div>
-                       <div className="game-arena">
-                            <Entity objectName = 'actor'/>
-                            <Entity objectName = 'controllers' entityText = { this.state.posX +" , "+ this.state.posY}/>
-                            <ReactCSSTransitionGroup
-                                transitionName="example"
-                                transitionEnterTimeout={500}
-                                transitionLeaveTimeout={300}> 
-                                <Entity objectName = 'box' entityText = {0} />
-                            </ReactCSSTransitionGroup>
-                       </div>
-    	           </div>
-    	        )
-    	    }
-    	});
-    	var Entity = function(props) {
-    	    return (
-    	       <div className = {props.objectName} onClick= {props.ClickHandler}>{props.entityText}</div>
-    	    )
-    	};
+      function Box(props) {
+        return (
+          <button className={props.classes} onClick = {props.onClick}>{props.value}</button>
+        );
+      }
+      function Actor(props) {
+        return (
+          <div className="actor" onClick = {props.onClick}>1</div>
+        );
+      }
+      function Culprit(props) {
+        return (
+          <div className="culprit" onClick = {props.onClick}></div>
+        );
+      }
+      class Controllers extends React.Component{
+        leftDirection(direction){
+          return <Box value = "left" classes = "btn btn-md btn-warning navigator" onClick = {() => this.props.onClick(direction)} />
+        }
+        rightDirection(direction){
+          return <Box value = "right" classes = "btn btn-md btn-info navigator" onClick = {() => this.props.onClick(direction)} />
+        }
+        topDirection(direction){
+          return <Box value = "top" classes = "btn btn-md btn-primary navigator" onClick = {() => this.props.onClick(direction)} />
+        }
+        bottomDirection(direction){
+          return <Box value = "down" classes = "btn btn-md btn-success navigator" onClick = {() => this.props.onClick(direction)} />
+        }
+        startButton(){
+          return <Box value = "Start" classes = "btn btn-md btn-success initiator" onClick = {() => this.props.onClick()} />
+        } 
+        stopButton(){
+          return <Box value = "Stop" classes = "btn btn-md btn-success navigator" onClick = {() => this.props.onClick()} />
+        } 
 
-    	var Layout = function(props) {
-    	    return (
-    	       <div></div>
-    	    ) 
-    	}
-    	ReactDOM.render(
-    	<Game />,
-    	document.getElementById('app')
-    	);
+
+        render() {
+          return(
+            <div className = 'row'>
+              <div className="container">
+                <div className="row">{this.startButton()}</div>
+                <div className="row">{this.topDirection('up')}</div>
+                <div className="row">
+                  <div className="side-navigator">{this.leftDirection('left')}</div>
+                  <div className="side-navigator">{this.rightDirection('right')}</div>
+                </div>
+                <div className="row">{this.bottomDirection('down')}</div>
+              </div>
+            </div>
+          )
+        }
+      }
+      class Space extends React.Component{
+        renderActor() {
+          return
+        }
+        render() {
+          return(
+            <div className = "container">
+              <div className="controllers col-md-2 col-xs-4">
+                <Controllers />
+              </div>
+              <div className = "arena col-md-9 col-xs-8">
+                <div className = "participants"><Actor/></div>
+                <div className = "participants"><Culprit/></div>
+              </div>
+            </div>
+          ) 
+        }
+      }
+      class GamePlay extends React.Component{}
+
+      ReactDOM.render(
+        <Space />, 
+        document.getElementById('app')
+      );
     </script>
   </body>
-   <!-- The boxes disappears and reappears to you.
-   render() {
-  return (
-    <ReactCSSTransitionGroup
-      transitionName="example"
-      transitionAppear={true}
-      transitionAppearTimeout={500}
-      transitionEnter={false}
-      transitionLeave={false}>
-      <h1>Fading at Initial Mount</h1>
-    </ReactCSSTransitionGroup>
-  );
-}
-        entity 1: Classname = Box
-                  Properties = color, visibility, posX, posY, speed, pathPassable, vector_unit,
-                  functions = move, appear, disappear 
-        entity 2: Classname = Actor
-                  properties = color, image, 
-        entity 3: Classname = Bullet
-                  properties: posX, posY, speed 
-                  function: move
-        entity 4: ClassName = Scene
-
-        entity 5: Controller testers
-                  These are temporary objects to check if the game functionalities are working. 
-                  They can be as much as possible on the Scene layout level 0
-
-        Layout Structure: Box, Actor, Bullet are on the same layout level 1
+   
+        <!-- Layout Structure: Box, Actor, Bullet are on the same layout level 1
         Question
-        1. How to use Object with react 
-    -->
+        1. How to use Object with react  -->
 </html>

@@ -65,6 +65,10 @@
 	background-image: url(../img/actor.png);
 	width: 20px;
 	height: 40px;
+	position: absolute;
 	background-size: contain;
 	background-repeat: no-repeat;
+	float: left;
 }
+.culprit {width: 4em; height: 4em; text-align: center; background-color: #fff; position: absolute; left: 30em; color: #eee;}
+.participants{top: 5em; position: relative}
